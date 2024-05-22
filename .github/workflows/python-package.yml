@@ -80,6 +80,7 @@ jobs:
         name: wheel-${{ matrix.python-version }}
 
   test-poetry:
+    needs: build-poetry
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
