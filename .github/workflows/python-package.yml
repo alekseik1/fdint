@@ -25,7 +25,7 @@ jobs:
           - python-version: 3.11
           - python-version: 3.12
     container:
-      image: python:${{ matrix.python-version }}
+      image: "python:${{ matrix.python-version }}"
 
     steps:
     - uses: actions/checkout@v4
