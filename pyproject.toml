@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "fdint"
+build = "build.py"
+version = "2.0.2"
+description = "Poetry port for fdint library"
+authors = ["smaddox <smaddox@utexas.edu>", "alekseik1 <1alekseik1@gmail.com>"]
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = ">=2.7"
+
+
+[build-system]
+requires = ["poetry-core", "cython", "setuptools", "numpy"]
+build-backend = "poetry.core.masonry.api"
