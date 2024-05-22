@@ -17,8 +17,9 @@ jobs:
       # `install-python` action no longer supports 2.7 (as of 22-05-2024), so using docker images
       matrix:
         include:
-          - python-version: '2.7'
-          - python-version: '3.6'
+          # I dropped support for old versions intentionally - use original fdint if you need old Python
+          # - python-version: '2.7'
+          # - python-version: '3.6'
           - python-version: '3.7'
           - python-version: '3.8'
           - python-version: '3.9'
