@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      # `install-python` action no longer supports 2.7 (as of 22-05-2024), so using docker images
       matrix:
         include:
           - python-version: '2.7'
@@ -39,7 +40,7 @@ jobs:
       run: |
         cd ..
         "$OLDPWD/venv/bin/python" -m fdint.tests
-  test-poetry:
+  build-poetry:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -67,10 +68,43 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install poetry
       run: pip install "poetry==${{ matrix.poetry-version }}"
+    - name: Install numpy prior to build on old 2.7 and 3.6
+      run: pip install numpy
+      if: (${{ matrix.python-version }} == '3.6') || (${{ matrix.poetry-version }} == '2.7')
     - name: Build poetry package
       run: python -m poetry build
+    - name: Cache wheel
+      uses: actions/upload-artifact@v4
+      with:
+        path: dist/*.whl
+        name: wheel-${{ matrix.python-version }}
+
+  test-poetry:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python-version: '2.7'
+          - python-version: '3.6'
+          - python-version: '3.7'
+          - python-version: '3.8'
+          - python-version: '3.9'
+          - python-version: '3.10'
+          - python-version: '3.11'
+          - python-version: '3.12'
+    container:
+      image: "python:${{ matrix.python-version }}"
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        path: package.whl
+        pattern: wheel-${{ matrix.python-version }}
+    - name: ls
+      run: ls -lah
     - name: Install built package globally
-      run: python -m pip install dist/*.whl
+      run: python -m pip install *.whl
     - name: Install numpy globally - test require it
       run: python -m pip install numpy
     - name: Run tests in global interpreter after poetry build
