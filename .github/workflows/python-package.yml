@@ -32,7 +32,7 @@ jobs:
     - name: Prepare virtual env
       run: |
         pip install virtualenv
-        python -m venv venv
+        python -m virtualenv venv
         venv/bin/pip install numpy Cython setuptools
         venv/bin/python setup.py install
     - name: Test with setup.py
