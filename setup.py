@@ -76,7 +76,7 @@ metadata = dict(
                 'fdint/_fdint.pxd',
                 'fdint/scfd.pxd',],
     test_suite='fdint.tests',
-    setup_requires=['numpy'],
+    setup_requires=[],
     install_requires=['numpy'],
 #     zip_safe=True,
 #     use_2to3=True,
