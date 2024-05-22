@@ -46,10 +46,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - python-version: '2.7'
-            poetry-version: '1.1.15'
-          - python-version: '3.6'
-            poetry-version: '1.1.15'
+          # broken, see https://github.com/alekseik1/fdint/actions/runs/9194455129
+          # - python-version: '2.7'
+          #   poetry-version: '1.1.15'
+          # - python-version: '3.6'
+          #   poetry-version: '1.1.15'
           - python-version: '3.7'
             poetry-version: '1.5.1'
           - python-version: '3.8'
@@ -86,8 +87,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - python-version: '2.7'
-          - python-version: '3.6'
+          # - python-version: '2.7'
+          # - python-version: '3.6'
           - python-version: '3.7'
           - python-version: '3.8'
           - python-version: '3.9'
