@@ -17,13 +17,21 @@ jobs:
       matrix:
         include:
           - python-version: '2.7'
+            poetry-version: '1.1.15'
           - python-version: '3.6'
+            poetry-version: '1.1.15'
           - python-version: '3.7'
+            poetry-version: '1.5.1'
           - python-version: '3.8'
+            poetry-version: '1.8.3'
           - python-version: '3.9'
+            poetry-version: '1.8.3'
           - python-version: '3.10'
+            poetry-version: '1.8.3'
           - python-version: '3.11'
+            poetry-version: '1.8.3'
           - python-version: '3.12'
+            poetry-version: '1.8.3'
     container:
       image: "python:${{ matrix.python-version }}"
 
@@ -39,3 +47,12 @@ jobs:
       run: |
         cd ..
         "$OLDPWD/venv/bin/python" -m fdint.tests
+    - name: Install poetry
+      run: pip install poetry
+    - name: Build poetry package
+      run: python -m poetry build
+    - name: Install built package globally
+      run: python -m pip install dist/*.whl
+    - name: Run tests in global interpreter after poetry build
+      run: python -m fdint.tests
+
