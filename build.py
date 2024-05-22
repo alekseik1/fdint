@@ -1,58 +1,75 @@
 # FOR POETRY ONLY
-# https://stackoverflow.com/a/63679316/5183539
-try:
-    from Cython.Build import cythonize
-# Do nothing if Cython is not available
-except ImportError:
-    # Got to provide this function. Otherwise, poetry will fail
-    def build(setup_kwargs):
-        pass
-# Cython is installed. Compile
-else:
-    from setuptools import Extension, setup
-    import numpy
+import os
+import shutil
+from distutils.command.build_ext import build_ext
+from pathlib import Path
 
-    ext = ".pyx"
+import numpy
+from Cython.Build import cythonize
+from setuptools import Distribution, Extension
 
-    # This function will be executed in setup.py:
-    def build(setup_kwargs):
-        # The file you want to compile
-        extensions = [
-            Extension("fdint._fdint", ["fdint/_fdint" + ext]),
-            Extension("fdint.fd", ["fdint/fd" + ext]),
-            Extension("fdint.dfd", ["fdint/dfd" + ext]),
-            Extension("fdint.ifd", ["fdint/ifd" + ext]),
-            Extension("fdint.gfd", ["fdint/gfd" + ext]),
-            Extension("fdint.dgfd", ["fdint/dgfd" + ext]),
-            Extension("fdint.scfd", ["fdint/scfd" + ext]),
-        ]
+ext = ".pyx"
+basedir = Path(__file__).absolute().parent
 
-        # read in __version__
-        exec(open("fdint/version.py").read())
 
-        metadata = dict(
-            name="fdint",
-            version=__version__,  # read from version.py
-            description="A free, open-source python package for quickly and "
-            "precisely approximating Fermi-Dirac integrals.",
-            long_description=open("README.rst").read(),
-            url="http://scott-maddox.github.io/fdint",
-            author="Scott J. Maddox",
-            author_email="smaddox@utexas.edu",
-            license="BSD",
-            packages=["fdint", "fdint.tests", "fdint.examples"],
-            package_dir={"fdint": "fdint"},
-            data_files=[
-                "fdint/__init__.pxd",
-                "fdint/_fdint.pxd",
-                "fdint/scfd.pxd",
-            ],
-            test_suite="fdint.tests",
-            setup_requires=["numpy"],
-            install_requires=["numpy"],
-            #     zip_safe=True,
-            #     use_2to3=True,
+# This function will be executed in setup.py:
+def build():
+    # The file you want to compile
+    extensions = [
+        Extension(
+            "fdint._fdint",
+            [str(basedir / "fdint/_fdint.pyx")],
             include_dirs=[numpy.get_include()],
-        )
-        metadata["ext_modules"] = cythonize(extensions)
-        setup(**metadata)
+        ),
+        Extension(
+            "fdint.fd",
+            [str(basedir / "fdint/fd.pyx")],
+            include_dirs=[numpy.get_include()],
+        ),
+        Extension(
+            "fdint.dfd",
+            [str(basedir / "fdint/dfd.pyx")],
+            include_dirs=[numpy.get_include()],
+        ),
+        Extension(
+            "fdint.ifd",
+            [str(basedir / "fdint/ifd.pyx")],
+            include_dirs=[numpy.get_include()],
+        ),
+        Extension(
+            "fdint.gfd",
+            [str(basedir / "fdint/gfd.pyx")],
+            include_dirs=[numpy.get_include()],
+        ),
+        Extension(
+            "fdint.dgfd",
+            [str(basedir / "fdint/dgfd.pyx")],
+            include_dirs=[numpy.get_include()],
+        ),
+        Extension(
+            "fdint.scfd",
+            [str(basedir / "fdint/scfd.pyx")],
+            include_dirs=[numpy.get_include()],
+        ),
+    ]
+
+    distribution = Distribution(
+        {"name": "extended", "ext_modules": cythonize(extensions)}
+    )
+    distribution.package_dir = "extended"
+
+    cmd = build_ext(distribution)
+    cmd.ensure_finalized()
+    cmd.run()
+
+    # Copy built extensions back to the project
+    for output in cmd.get_outputs():
+        relative_extension = os.path.relpath(output, cmd.build_lib)
+        shutil.copyfile(output, relative_extension)
+        mode = os.stat(relative_extension).st_mode
+        mode |= (mode & 0o444) >> 2
+        os.chmod(relative_extension, mode)
+
+
+if __name__ == "__main__":
+    build()
