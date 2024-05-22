@@ -48,7 +48,7 @@ jobs:
         cd ..
         "$OLDPWD/venv/bin/python" -m fdint.tests
     - name: Install poetry
-      run: pip install poetry
+      run: pip install "poetry==${{ matrix.poetry-version }}"
     - name: Build poetry package
       run: python -m poetry build
     - name: Install built package globally
