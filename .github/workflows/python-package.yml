@@ -10,7 +10,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  test:
+  test-setuppy:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -40,7 +40,7 @@ jobs:
       run: |
         cd ..
         "$OLDPWD/venv/bin/python" -m fdint.tests
-  build-poetry:
+  build-test-poetry:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
