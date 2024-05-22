@@ -20,7 +20,7 @@
 import sys
 import os.path
 from setuptools import setup, Extension
-# import numpy
+import numpy
 
 try:
     from Cython.Build import cythonize
@@ -76,11 +76,11 @@ metadata = dict(
                 'fdint/_fdint.pxd',
                 'fdint/scfd.pxd',],
     test_suite='fdint.tests',
-    setup_requires=[],
+    setup_requires=['numpy'],
     install_requires=['numpy'],
 #     zip_safe=True,
 #     use_2to3=True,
-    # include_dirs=[numpy.get_include()],
+    include_dirs=[numpy.get_include()],
     )
 
 if USE_CYTHON:
