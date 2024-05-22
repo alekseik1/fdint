@@ -4,12 +4,9 @@ version = "2.0.2"
 description = "Poetry port for fdint library"
 authors = ["smaddox <smaddox@utexas.edu>", "alekseik1 <1alekseik1@gmail.com>"]
 readme = "README.rst"
-include = [
-    {path = "*.so", format = ["wheel", "sdist"]}
-]
 
 [tool.poetry.build]
-script = "build.py"
+script = "setup.py"
 generate-setup-file = true
 
 [tool.poetry.dependencies]
