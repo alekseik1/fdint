@@ -29,27 +29,10 @@ except:
 
 try:
     from Cython.Build import cythonize
+except:  # Only cython builds are supported so we need to install them
+    print("no Cython found, installing manually")
+    os.system("%s -m pip install Cython" % sys.executable)
     USE_CYTHON = True
-except Exception as e:
-    print("cannot import Cython with error" + str(e))
-    if len(sys.argv) >= 1 and 'sdist' in sys.argv[1:]:
-        raise RuntimeError('Cython is required to build a source distribution.')
-    USE_CYTHON = False
-    def no_cythonize(extensions, **_ignore):
-        for extension in extensions:
-            sources = []
-            for sfile in extension.sources:
-                path, ext = os.path.splitext(sfile)
-                if ext in ('.pyx', '.py'):
-                    if extension.language == 'c++':
-                        ext = '.cpp'
-                    else:
-                        ext = '.c'
-                    sfile = path + ext
-                sources.append(sfile)
-            extension.sources[:] = sources
-        return extensions
-
 ext = '.pyx' if USE_CYTHON else '.c'
 
 extensions = [Extension("fdint._fdint", ["fdint/_fdint"+ext]),
@@ -92,6 +75,6 @@ metadata = dict(
 if USE_CYTHON:
     metadata['ext_modules'] = cythonize(extensions)
 else:
-    metadata['ext_modules'] = no_cythonize(extensions)
+    raise ValueError("Cannot build without Cython")
 
 setup(**metadata)
