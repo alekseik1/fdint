@@ -79,6 +79,10 @@ jobs:
       with:
         path: dist/*.whl
         name: wheel-${{ matrix.python-version }}
+    - name: Update pip on python 2.7
+      # cannot install package without pip update for some reason
+      run: pip install -U pip
+      if: ${{ matrix.poetry-version }} == '2.7'
 
     - name: Install built package globally
       run: python -m pip install dist/*.whl
