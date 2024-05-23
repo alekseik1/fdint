@@ -32,7 +32,8 @@ try:
 except:  # Only cython builds are supported so we need to install them
     print("no Cython found, installing manually")
     os.system("%s -m pip install Cython" % sys.executable)
-    USE_CYTHON = True
+    from Cython.Build import cythonize
+USE_CYTHON = True
 ext = '.pyx' if USE_CYTHON else '.c'
 
 extensions = [Extension("fdint._fdint", ["fdint/_fdint"+ext]),
