@@ -20,8 +20,8 @@ jobs:
       matrix:
         include:
           # I dropped support for old versions intentionally - use original fdint if you need old Python
-          # - python-version: '2.7'
-          # - python-version: '3.6'
+          - python-version: '2.7'
+          - python-version: '3.6'
           - python-version: '3.7'
           - python-version: '3.8'
           - python-version: '3.9'
@@ -50,10 +50,10 @@ jobs:
       matrix:
         include:
           # broken, see https://github.com/alekseik1/fdint/actions/runs/9194455129
-          # - python-version: '2.7'
-          #   poetry-version: '1.1.15'
-          # - python-version: '3.6'
-          #   poetry-version: '1.1.15'
+          - python-version: '2.7'
+            poetry-version: '1.1.15'
+          - python-version: '3.6'
+            poetry-version: '1.1.15'
           - python-version: '3.7'
             poetry-version: '1.5.1'
           - python-version: '3.8'
