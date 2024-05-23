@@ -20,7 +20,12 @@
 import sys
 import os.path
 from setuptools import setup, Extension
-import numpy
+try:
+    import numpy
+except:
+    os.system("%s -m pip install numpy" % sys.executable)
+    print("no numpy found, installing manually")
+    import numpy
 
 try:
     from Cython.Build import cythonize
