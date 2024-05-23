@@ -23,14 +23,15 @@ from setuptools import setup, Extension
 try:
     import numpy
 except:
-    os.system("%s -m pip install numpy" % sys.executable)
     print("no numpy found, installing manually")
+    os.system("%s -m pip install numpy" % sys.executable)
     import numpy
 
 try:
     from Cython.Build import cythonize
     USE_CYTHON = True
-except:
+except Exception as e:
+    print("cannot import Cython with error" + str(e))
     if len(sys.argv) >= 1 and 'sdist' in sys.argv[1:]:
         raise RuntimeError('Cython is required to build a source distribution.')
     USE_CYTHON = False
