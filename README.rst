@@ -4,6 +4,11 @@ Fermi-Dirac Integrals (FDINT)
 This is a fork of ``fdint`` library intended to work with Poetry on Python 3.7+.
 For older Python versions please use original ``fdint`` module.
 
+
+Sources are here: `my sources`_.
+
+Below is readme of original project.
+
 FDINT is a free, open-source python package that provides fast, double
 precision (64-bit floating point) approximations to the Fermi-Dirac
 integrals of integer and half integer order, based on the work by
@@ -204,6 +209,7 @@ Documentation
 
 The `documentation`_ (coming soon) is graciously hosted by GitHub.
 
+.. _`my sources`: https://github.com/alekseik1/fdint
 .. _`source code`: http://github.com/scott-maddox/fdint
 .. _`documentation`: http://scott-maddox.github.io/fdint
 .. _`PyPi`: http://pypi.python.org/pypi
