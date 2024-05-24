@@ -1,6 +1,9 @@
 [tool.poetry]
-name = "fdint"
+name = "fdint_py3"
 version = "2.0.2"
+packages = {
+  { include = "fdint" },
+}
 description = "Poetry port for fdint library, for py 3.7+ only"
 authors = ["smaddox <smaddox@utexas.edu>", "alekseik1 <1alekseik1@gmail.com>"]
 readme = "README.rst"
