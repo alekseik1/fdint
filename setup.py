@@ -49,7 +49,7 @@ extensions = [Extension("fdint._fdint", ["fdint/_fdint"+ext]),
 exec(open('fdint/version.py').read())
 
 metadata = dict(
-    name='fdint',
+    name='fdint_py3',
     version=__version__,  # read from version.py
     description = 'A free, open-source python package for quickly and '
                   'precisely approximating Fermi-Dirac integrals.',
