@@ -28,6 +28,8 @@ jobs:
           - python-version: '3.10'
           - python-version: '3.11'
           - python-version: '3.12'
+          - python-version: '3.13'
+          - python-version: '3.14'
     container:
       image: "python:${{ matrix.python-version }}"
 
@@ -43,3 +45,4 @@ jobs:
       run: |
         cd ..
         "$OLDPWD/venv/bin/python" -m fdint.tests
+
